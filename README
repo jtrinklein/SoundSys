@@ -1,0 +1,21 @@
+N(ode)SoundSys
+
+A simple sound system built in Node.js using the Express module.
+
+The server can be interfaced through GET requests to play/stop/list sounds. The idea is similar to a jukebox.
+Sounds can also be uploaded to the server through a POST endpoint.
+
+GET API:
+/list                - returns a table of available sounds.
+/play?file=fn        - plays the file named 'fn'
+/stop                - stops the currently playing sound
+/deletesound?file=fn - deletes a file named 'fn'
+
+POST API:
+/soundupload         - uploads a sound to the server to make available for playing
+
+Currently all sounds are played through mplayer.
+
+Running NSoundSys:
+Simply start the server: 'node app.js'
+

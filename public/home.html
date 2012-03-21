@@ -1,0 +1,49 @@
+<html>
+	<head>
+	<title>N(ode)SoundSys</title>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="http://www.johnlawrence.net/itable/itunes.css"/>
+	</head>
+<body>
+	<center>
+	<pre><a href="javascript: refreshList();">Refresh Sound List</a> | <a href="javascript: stopSounds()">Stop Sounds</a> | <a href="soundupload.html">Upload A Sound</a> </pre><br/>
+	<div id="soundList"></div>
+	</center>
+	<script type="text/javascript">
+	function refreshList() {
+		$('#soundList').html('Loading Sound List. Please Wait...');
+		$.get('/list', function(data, status) {
+			$('#soundList').html(data);
+		});
+	}
+
+	function playSound(file) {
+		$.get('/play?file=' + file, function(){$('#status').html('Playing: ' + file);});
+	}
+
+	function stopSounds() {
+		$.get('/stop', function(){});
+	}
+
+	function updateStatus() {
+		$.get('/status',function(data, status) {
+			$('#status').html(data);
+		});
+	}
+	function deleteSound(file) {
+		$.get('/deletesound?file=' + file, function() {
+			setTimeout(function() {
+				refreshList();
+				setTimeout(function(){$('#status').html('Deleted file: ' + file);},200);
+			},500);
+		});
+	}
+
+	$(document).ready( function() {
+		refreshList();
+		updateStatus();
+	});
+
+	</script>
+</body>
+</html>

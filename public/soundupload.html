@@ -1,0 +1,19 @@
+<html class="enhanced">
+<head>
+	<title>N(ode)SoundSys - Upload Sound</title>
+	
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script src="/javascripts/jquery.form.js"></script>
+	
+</head>
+<body>
+    <a href="/home.html">Go To Sound List</a><br/>
+	<form id="soundUploadForm" enctype="multipart/form-data" 
+							action="/soundupload" method="post">
+		<input type="file" id="soundFileInput" name="soundfile" />
+        
+    </form>
+    <span id="status" />
+    <script src="/javascripts/upload.js"></script>
+</body>
+</html>
