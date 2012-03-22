@@ -53,6 +53,8 @@ app.get('/stop', function(req,res){
 
 app.get('/play', function(req,res){
 	var file = req.query['file'];
+	//todo: clean input file & verify before passing to mplayer
+	
 	stopLastSound();
 
 	mplayer=spawn('mplayer', ['./sounds/' + file]);
@@ -68,25 +70,7 @@ app.get('/play', function(req,res){
 
 app.get('/list', function(req,res) {
 	var files = fs.readdirSync('./sounds');
-	
-	var response = '<table id="soundLinkTable" width="40%">';
-	response += '<thead><tr><th scope="col">Sound Name</th><th scope="col">Delete</th></tr></thead>';
-	response += '<tbody>';
-
-	for(var i = 0; i < files.length; ++i) {
-		var eFile = escape(files[i]);
-		var rowClass = (i%2 == 0) ? 'even' : 'odd';
-		
-		response += '<tr class="' + rowClass + '">';
-		response += '<th scope="row"><a href="javascript: playSound(\'' + eFile + '\')">' + files[i] + '</a></th>';
-		response += '<td><a href="javascript: deleteSound(\'' + eFile + '\')">delete</a></td>';
-		response += '</tr>';
-	}
-
-	response += '<tfoot><tr><td id="status" colspan="2">&nbsp;</td></tr></tfoot>';
-	response += '</tbody></table>';
-
-	res.send(response);
+	res.send(JSON.stringify(files));
 });
 
 app.get('/status', function(req,res){

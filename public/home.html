@@ -7,14 +7,37 @@
 <body>
 	<center>
 	<pre><a href="javascript: refreshList();">Refresh Sound List</a> | <a href="javascript: stopSounds()">Stop Sounds</a> | <a href="soundupload.html">Upload A Sound</a> </pre><br/>
-	<div id="soundList"></div>
+	<table id="soundLinkTable" width="40%">
+		<thead>
+			<tr><th scope="col">Sound Name</th><th scope="col">Delete</th></tr>
+		</thead>
+		<tbody id="soundTableBody">
+
+		<tfoot>
+			<tr><td id="status" colspan="2">&nbsp;</td></tr>
+		</tfoot>
+	</tbody>
+	</table>
+	
 	</center>
 	<script type="text/javascript">
+	
 	function refreshList() {
-		$('#soundList').html('Loading Sound List. Please Wait...');
 		$.get('/list', function(data, status) {
-			$('#soundList').html(data);
+			var files = JSON.parse(data);
+			var bodyData = '';
+			for(var i = 0; i < files.length; ++i) {
+				var efile = escape(files[i]);
+				var rowclass = (i%2 == 0) ? 'even' : 'odd';
+				
+				bodyData += '<tr class="' + rowclass + '">';
+				bodyData += '<th scope="row"><a href="javascript: playsound(\'' + efile + '\')">' + files[i] + '</a></th>';
+				bodyData += '<td><a href="javascript: deletesound(\'' + efile + '\')">delete</a></td>';
+				bodyData += '</tr>';
+			}
+			$('#soundTableBody').html(bodyData);
 		});
+		
 	}
 
 	function playSound(file) {
