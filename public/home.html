@@ -28,7 +28,7 @@
 			var bodyData = '';
 			for(var i = 0; i < files.length; ++i) {
 				var efile = escape(files[i]);
-				var rowclass = (i%2 == 0) ? 'even' : 'odd';
+				var rowclass = ((i+1)%2 == 0) ? 'even' : 'odd';
 				
 				bodyData += '<tr class="' + rowclass + '">';
 				bodyData += '<th scope="row"><a href="javascript: playsound(\'' + efile + '\')">' + files[i] + '</a></th>';
